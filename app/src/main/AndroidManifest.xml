@@ -9,7 +9,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+<<<<<<< HEAD
         <activity android:name=".QuizActivity">
+=======
+        <activity android:name=".PastResultsActivity"></activity>
+        <activity android:name=".QuizActivity" />
+        <activity android:name=".SplashActivity">
+>>>>>>> 27e29596c923d228aedcb756a84e25d39007a167
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
