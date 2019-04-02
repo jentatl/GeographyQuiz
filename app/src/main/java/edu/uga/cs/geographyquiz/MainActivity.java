@@ -1,7 +1,7 @@
 package edu.uga.cs.geographyquiz;
 
 import android.content.res.Resources;
-import android.support.v7.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -14,6 +14,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import com.opencsv.CSVReader;
 import java.io.InputStreamReader;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
