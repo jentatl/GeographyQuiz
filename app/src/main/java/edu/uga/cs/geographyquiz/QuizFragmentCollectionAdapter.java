@@ -14,6 +14,11 @@ public class QuizFragmentCollectionAdapter extends FragmentStatePagerAdapter {
     @Override
     public Fragment getItem(int position) {
 
+        //https://medium.com/@kyroschow/how-to-use-viewpager-for-navigating-between-fragments-with-tablayout-a28b4cf92c42
+        if (position == 6){     //after answering the last question, call the results fragment
+            return new ResultsFragment();
+        }
+
         QuizFragment quizFragment = new QuizFragment();
         Bundle bundle = new Bundle();   //pass a string thru the bundle
         position = position + 1;    //increment the position (start from 1 instead of 0)
