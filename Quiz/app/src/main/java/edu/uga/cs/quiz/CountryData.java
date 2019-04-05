@@ -48,21 +48,33 @@ public class CountryData {
     }
 
     public String getSpecificName(long id){
-        String cName = CountryDBHelper.COUNTRY_COLUMN_NAME;
         String name = "";
-        String query = "Select " + cName + " FROM " + CountryDBHelper.TABLE_COUNTRIES + " WHERE " + CountryDBHelper.COUNTRY_COLUMN_ID + " = " + "'" + id + "'";
+        String query = "Select " + CountryDBHelper.COUNTRY_COLUMN_NAME + " FROM " + CountryDBHelper.TABLE_COUNTRIES + " WHERE " + CountryDBHelper.COUNTRY_COLUMN_ID +  "=" + id + ";";
         System.out.println(query);
         SQLiteDatabase db = countryDbHelper.getWritableDatabase();
 
-        Cursor cursor = db.rawQuery(query, null);
+        Cursor cursor = null;
 
-        if(cursor.moveToFirst()){
-            cursor.moveToFirst();
-            name = cursor.getString( cursor.getColumnIndex( CountryDBHelper.COUNTRY_COLUMN_NAME ) );
-            cursor.close();
-            Log.d( DEBUG_TAG, "Retrieved Country name");
+        try {
+            // Execute the select query and get the Cursor to iterate over the retrieved rows
+            cursor = db.query(CountryDBHelper.TABLE_COUNTRIES, allColumns,
+                    null, null, null, null, null );
+            // collect all job leads into a List
+            if( cursor.getCount() > 0 ) {
+                cursor.moveToPosition((int)id);
+                    name = cursor.getString( cursor.getColumnIndex(CountryDBHelper.COUNTRY_COLUMN_NAME ));
+            }
+
         }
-
+        catch( Exception e ){
+            Log.d( DEBUG_TAG, "Exception caught: " + e );
+        }
+        finally{
+            // we should close the cursor
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
         return name;
     }// get specific row
 
@@ -73,17 +85,29 @@ public class CountryData {
         String query = "Select " + con + " FROM " + CountryDBHelper.TABLE_COUNTRIES + " WHERE " + CountryDBHelper.COUNTRY_COLUMN_ID + " = " + "'" + id + "'";
 
         SQLiteDatabase db = countryDbHelper.getWritableDatabase();
-        Cursor cursor = db.rawQuery(query, null);
+        Cursor cursor = null;
 
-        if( cursor.getCount() > 0 ) {
-            while( cursor.moveToNext() ) {
-                long temp = cursor.getLong( cursor.getColumnIndex( CountryDBHelper.COUNTRY_COLUMN_ID ) );
-                String name = cursor.getString( cursor.getColumnIndex( CountryDBHelper.COUNTRY_COLUMN_NAME ) );
-                continent = cursor.getString( cursor.getColumnIndex( CountryDBHelper.COUNTRY_COLUMN_CONTINENT ) );
+        try {
+            // Execute the select query and get the Cursor to iterate over the retrieved rows
+            cursor = db.query(CountryDBHelper.TABLE_COUNTRIES, allColumns,
+                    null, null, null, null, null );
+            // collect all job leads into a List
+            if( cursor.getCount() > 0 ) {
+                cursor.moveToPosition((int)id);
+                continent = cursor.getString( cursor.getColumnIndex(CountryDBHelper.COUNTRY_COLUMN_CONTINENT));
+            }
 
-                Log.d( DEBUG_TAG, "Retrieved Country Continent");
+        }
+        catch( Exception e ){
+            Log.d( DEBUG_TAG, "Exception caught: " + e );
+        }
+        finally{
+            // we should close the cursor
+            if (cursor != null) {
+                cursor.close();
             }
         }
+
 
         return continent;
     }// get specific row
