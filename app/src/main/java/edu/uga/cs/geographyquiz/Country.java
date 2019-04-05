@@ -1,25 +1,33 @@
 package edu.uga.cs.geographyquiz;
 
+/**
+ * POJO Class
+ */
 public class Country {
 
-    private int countryId;
+    private long countryId;
     private String countryName;
     private String countryContinent;
 
     //constructors
-    public Country(){}
-    public Country(int id, String country, String continent){
-        this.countryId = id;
+
+    public Country(){
+        this.countryName = null;
+        this.countryContinent = null;
+        this.countryId = -1;
+    }
+    public Country(String country, String continent){
         this.countryName = country;
         this.countryContinent = continent;
+        this.countryId = -1;
     }
 
     //properties
-    public void setId(int id){
+    public void setId(long id){
         this.countryId = id;
     }
 
-    public int getId(){
+    public long getId(){
         return this.countryId;
     }
 
@@ -37,5 +45,9 @@ public class Country {
 
     public String getCountryName(){
         return this.countryName;
+    }
+
+    public String toString(){
+        return countryId + ": " + countryName + " " + countryContinent;
     }
 }

@@ -5,11 +5,12 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 public class DatabaseHandler extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 1;
-    private static final String LOG = "DatabaseHelper";
+    private static final String LOG = "DatabaseHandler";
 
     // database name
     private static final String DATABASE_NAME = "geographyQuizDB.db";
@@ -19,39 +20,53 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public static final String TABLE_QUIZZES = "Quizzes";
 
     // country columns
-    private static final String KEY_COUNTRIES_ID = "countries_id";
-    private static final String KEY_COUNTRIES_NAME = "country_name";
-    private static final String KEY_COUNTRY_CONTINENT = "continent";
+    public static final String KEY_COUNTRIES_ID = "countries_id";
+    public static final String KEY_COUNTRIES_NAME = "country_name";
+    public static final String KEY_COUNTRY_CONTINENT = "continent";
 
     // quiz columns
-    private static final String KEY_QUIZZES_ID = "quiz_id";
-    private static final String KEY_QUIZ_SCORE = "score";
-    private static final String KEY_QUIZ_DATE = "date";
-    private static final String KEY_QUIZ_COUNTRIES = "quiz_countries";
+    public static final String KEY_QUIZZES_ID = "quiz_id";
+    public static final String KEY_QUIZ_SCORE = "score";
+    public static final String KEY_QUIZ_DATE = "date";
+    public static final String KEY_QUIZ_COUNTRIES = "quiz_countries";
 
-    public DatabaseHandler(Context context, String name,
-                           SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, DATABASE_NAME, factory, DATABASE_VERSION);
-    } // constructor
+    private static DatabaseHandler helperInstance;
+
+    protected static final String CREATE_COUNTRIES = "CREATE TABLE " + TABLE_COUNTRIES +
+            "(" +  KEY_COUNTRIES_ID + "INTEGER PRIMARY KEY," + KEY_COUNTRIES_NAME
+            + "TEXT," + KEY_COUNTRY_CONTINENT + "TEXT )";
+
+    protected static final String CREATE_QUIZZES = "CREATE TABLE " + TABLE_QUIZZES +
+            "(" +  KEY_QUIZZES_ID + "INTEGER PRIMARY KEY," + KEY_QUIZ_DATE + "TEXT"
+            + KEY_QUIZ_SCORE + "INTEGER," + KEY_QUIZ_COUNTRIES + "TEXT )";
+
+    public DatabaseHandler(Context context ) {
+        super( context, DATABASE_NAME, null, DATABASE_VERSION);
+    }// constructor
 
     public void onCreate(SQLiteDatabase db){
-        String CREATE_COUNTRIES = "CREATE TABLE " + TABLE_COUNTRIES +
-                "(" +  KEY_COUNTRIES_ID + "INTEGER PRIMARY KEY," + KEY_COUNTRIES_NAME
-                + "TEXT," + KEY_COUNTRY_CONTINENT + "TEXT )";
 
-        String CREATE_QUIZZES = "CREATE TABLE " + TABLE_QUIZZES +
-                "(" +  KEY_QUIZZES_ID + "INTEGER PRIMARY KEY," + KEY_QUIZ_DATE + "TEXT"
-                + KEY_QUIZ_SCORE + "INTEGER," + KEY_QUIZ_COUNTRIES + "TEXT )";
+        Log.d( "DB", "Table " + TABLE_COUNTRIES + " created" );
+        Log.d( "DB", "Table " + TABLE_QUIZZES + " created" );
 
         db.execSQL(CREATE_COUNTRIES);
         db.execSQL(CREATE_QUIZZES);
     } // on create
+
+    public static synchronized DatabaseHandler getInstance( Context context ) {
+        // check if the instance already exists and if not, create the instance
+        if( helperInstance == null ) {
+            helperInstance = new DatabaseHandler( context.getApplicationContext() );
+        }
+        return helperInstance;
+    }
 
     public void onUpgrade(SQLiteDatabase db, int oldversion, int newversion){
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_COUNTRIES);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_QUIZZES);
 
         onCreate(db);
+        Log.d(LOG, "Table s have been upgraded");
     } // on upgrade
 
     public String loadCountryHandler(){
