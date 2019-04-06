@@ -1,5 +1,6 @@
 package edu.uga.cs.quiz;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -20,10 +23,16 @@ import java.util.Collections;
 
 public class QuizFragment extends ListFragment {
 
-    public String[] continents = {"Asia", "Africa", "Europe"};
+    ArrayList<Integer> random3 = new ArrayList();
+    ArrayList<Integer> random7 = new ArrayList();
+    int a1;
+    protected static final String [] CONTINENTS = {"Africa", "Asia", "Antartica", "Oceania", "North America", "South America", "Europe" };
+    public String[] answerSelection = new String [3];
+
+    public String[] random6 = new String[6];
     int num;
-    long idClicked;
     View v;
+    QuizActivity qa = new QuizActivity();
 
   /* Create a new instance of fragment */
   static QuizFragment newInstance(int x){
@@ -40,18 +49,36 @@ public class QuizFragment extends ListFragment {
   /* When creating, retrieve this instanc's number from its arguments */
   @Override
   public void onCreate(Bundle savedInstanceState){
+
       super.onCreate(savedInstanceState);
+
+      random3.add(1); random3.add(2); random3.add(3);
+      random7.add(1); random7.add(2); random7.add(3); random7.add(4); random7.add(5); random7.add(6); random7.add(7);
+
+      Collections.shuffle(random3);
+      Collections.shuffle(random7);
+
+
       num = getArguments() != null ? getArguments().getInt("num") : 1;
   }// onCreate
 
   /* The fragments ui */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        v = inflater.inflate(R.layout.fragment_quiz, container, false);
-        View tv = v.findViewById(R.id.questionTextView);
+            v = inflater.inflate(R.layout.fragment_quiz, container, false);
+            View tv = v.findViewById(R.id.questionTextView);
+            ((TextView) tv).setText("\nQuestion Number " + (num + 1) + "\n\nWhich continent is " + getCountry(num) + " from?");
 
-        ((TextView)tv).setText("Fragment # " + num);
+            Button button = v.findViewById(R.id.button);
+
+            if(num != 5){
+                button.setVisibility(View.INVISIBLE);
+            }else{
+                button.setVisibility(View.VISIBLE);
+                button.setOnClickListener( new ResultsClickListener()) ;
+            }
         return v;
+
     }// onCreateView
 
     @Override
@@ -60,8 +87,19 @@ public class QuizFragment extends ListFragment {
 
         ListView lv = v.findViewById(android.R.id.list);
 
+        a1 = (random3.get(0))-1;
+        int a2 = (random3.get(1))-1;
+        int a3 = (random3.get(2))-1;
+
+        answerSelection[a1] = qa.getAnswer(num);
+
+        get2RandomContinents();
+        // sets continents
+        answerSelection[a2] = random6[0];
+        answerSelection[a3] = random6[1];
+
         ArrayAdapter adapter = new ArrayAdapter<String>(getActivity(),
-        android.R.layout.simple_list_item_single_choice, continents);
+        android.R.layout.simple_list_item_single_choice, answerSelection);
 
         lv.setAdapter(adapter);
     }// onactivitycreated
@@ -69,50 +107,55 @@ public class QuizFragment extends ListFragment {
     @Override
     public void onListItemClick(ListView l, View v, int position, long id){
        // l.getChildAt(position).setBackgroundColor(Color.parseColor("#D3D3D3"));
+        qa.checkAnswer(num, answerSelection[a1], a1, id);
         Log.i("FragmentList", "Item Clicked: " + id);
     }// on list item clicked
-/*
-    protected ArrayList <Integer> random7 = new ArrayList();
 
-    TextView mTextViewQuestion;
-    QuizActivity qa = new QuizActivity();
-    String random2Continents [] = new String[2];
-    int answer = 0;
-    int question = 0;
+    public String getCountry(int num){
+        String country = "";
 
-    RadioGroup radioGroup;
-    RadioButton rb1;
-    RadioButton rb2;
-    RadioButton rb3;
+        System.out.println("Number: " + num);
 
-    ArrayList<Integer> random3 = new ArrayList();
-    protected static final String [] CONTINENTS = {"Africa", "Asia", "Antartica", "Oceania", "North America", "South America", "Europe" };
+        if(num == 0){
+          country = qa.getCountry(0);
+        }else if(num == 1){
+            country = qa.getCountry(1);
+        }else if(num == 2){
+            country = qa.getCountry(2);
+        }else if(num == 3){
+            country = qa.getCountry(3);
+        }else if(num == 4){
+            country = qa.getCountry(4);
+        }else if(num == 5){
+            country = qa.getCountry(5);
+        }else{
+            country = "LOST DATA :/";
+        }
+        return country;
+    } // get country
 
-    public QuizFragment() {
-        // Required empty public constructor
+    private class ResultsClickListener implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(getActivity(), ResultActivity.class);
+            startActivity(intent);
+        }
     }
 
+    public void get2RandomContinents(){
+        int answer = qa.getNumCorrectAnswer(num);
+        int x = 0;
+        for(int i = 0; i < 7; i++){
+            if((random7.get(i)-1) == answer){
+                continue;
+            }else{
+                random6[x] = CONTINENTS[(random7.get(i)-1)];
+            }
+            x++;
+        }
+    }
+/*
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-        random3.add(1); random3.add(2); random3.add(3);
-        random7.add(1); random7.add(2); random7.add(3); random7.add(4); random7.add(5); random7.add(6); random7.add(7);
-        Collections.shuffle(random3);
-        Collections.shuffle(random7);
-
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_quiz, container, false);
-
-        mTextViewQuestion = view.findViewById(R.id.questionTextView);
-        String question = getArguments().getString("question");     //get the question from the fragment
-        mTextViewQuestion.setText(question);    //display the question using textview
-
-        radioGroup = (RadioGroup) view.findViewById(R.id.radiogroup);
-
-        rb1 = view.findViewById(R.id.radioButton1);
-        rb2 = view.findViewById(R.id.radioButton2);
-        rb3 = view.findViewById(R.id.radioButton3);
 
         String continents [] = new String[3];
         int numAnswer = qa.getNumCorrectAnswer();

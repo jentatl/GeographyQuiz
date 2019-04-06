@@ -28,6 +28,8 @@ public class QuizFragmentCollectionAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
+
+
         return QuizFragment.newInstance(position);
     }
 

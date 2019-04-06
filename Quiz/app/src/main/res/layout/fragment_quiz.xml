@@ -28,50 +28,19 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.239" />
 
-   <!-- <RadioGroup
+    <Button
+        android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
-        android:id="@+id/radiogroup"
+        tools:layout_editor_absoluteX="161dp"
+        tools:layout_editor_absoluteY="599dp"
+        android:layout_marginTop = "400dp"
+        android:text="View Results"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/questionTextView"
-        app:layout_constraintVertical_bias="0.39">
-
-       <RadioButton
-            android:id="@+id/radioButton1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Continent 1"
-            android:textSize="25dp"
-            android:textColor="#3a4660" />
-
-        <RadioButton
-            android:id="@+id/radioButton2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Continent 2"
-            android:textSize="25dp"
-            android:textColor="#3a4660" />
-
-
-        <RadioButton
-            android:id="@+id/radioButton3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Continent 3"
-            android:textSize="25dp"
-            android:textColor="#3a4660" />
-    </RadioGroup>-->
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -80,20 +49,20 @@
         <!-- Here is the list. Since we are using a ListActivity, we
              have to call it "@android:id/list" so ListActivity will
              find it -->
+        <!-- Here is the view to show if the list is emtpy -->
+        <TextView
+            android:id="@android:id/empty"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="No items."
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
         <ListView
             android:id="@android:id/list"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:choiceMode="singleChoice"
-            />
-
-        <!-- Here is the view to show if the list is emtpy -->
-        <TextView android:id="@android:id/empty"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="No items."/>
-
+            android:textSize="30dp"/>
     </FrameLayout>
 
 
