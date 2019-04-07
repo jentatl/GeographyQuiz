@@ -10,7 +10,7 @@
     <TextView
         android:id="@+id/questionTextView"
         android:layout_width="349dp"
-        android:layout_height="130dp"
+        android:layout_height="220dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
@@ -19,8 +19,8 @@
         android:layout_marginBottom="8dp"
         android:gravity="center"
         android:text="Question"
-        android:textSize="25dp"
         android:textColor="#3a4660"
+        android:textSize="25dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

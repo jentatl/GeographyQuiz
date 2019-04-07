@@ -2,9 +2,13 @@ package edu.uga.cs.geographyquiz;
 
 import android.os.Bundle;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.lifecycle.ViewModelProviders;
 
 public class QuizFragmentCollectionAdapter extends FragmentStatePagerAdapter {
     public QuizFragmentCollectionAdapter(FragmentManager fm) {
@@ -19,12 +23,22 @@ public class QuizFragmentCollectionAdapter extends FragmentStatePagerAdapter {
             return new ResultsFragment();
         }
 
+        CountryRepository cr = new CountryRepository();
+        List<Country> dummyCountryList = new ArrayList<>();
+        dummyCountryList = cr.getDummyCountries();
+
+        String[] dummyAnswerList = cr.getDummyAnswers();
+
         QuizFragment quizFragment = new QuizFragment();
         Bundle bundle = new Bundle();   //pass a string thru the bundle
-        position = position + 1;    //increment the position (start from 1 instead of 0)
-        bundle.putString("question", "Question " + position
-                + "\n\nSelect the continent on which {country} is located." );   //attach the question to the bundle
+        bundle.putInt("question_number" , position);
+        bundle.putString("question", "\n\nSelect the continent on which " + dummyCountryList.get(position).countryName + " is located." );   //attach the question to the bundle
+        bundle.putString("option1", dummyAnswerList[0]);
+        bundle.putString("option2", dummyAnswerList[1]);
+        bundle.putString("option3", dummyAnswerList[2]);
         quizFragment.setArguments(bundle);      //attach bundle to the fragment
+
+        /////
 
         return quizFragment;
     }

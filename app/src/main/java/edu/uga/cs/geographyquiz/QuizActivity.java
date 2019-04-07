@@ -1,10 +1,9 @@
 package edu.uga.cs.geographyquiz;
 
-import android.content.Intent;
 import android.os.Bundle;
 
-
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 
 public class QuizActivity extends AppCompatActivity {
@@ -25,6 +24,7 @@ public class QuizActivity extends AppCompatActivity {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 //TODO Auto-generated method stub
+
             }
 
             @Override
@@ -45,5 +45,12 @@ public class QuizActivity extends AppCompatActivity {
             }
         });
 
+
+
+
+
+
     }   //onCreate
+
+
 }
