@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 public class ResultsFragment extends Fragment implements View.OnClickListener {
 
 
+    MainActivity ma = new MainActivity();
+
     public ResultsFragment() {
         // Required empty public constructor
     }
@@ -36,10 +38,12 @@ public class ResultsFragment extends Fragment implements View.OnClickListener {
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.butt_newQuiz:
+                    ma.score = 0;
                     Intent intent = new Intent(getActivity(), QuizActivity.class);
                     startActivity(intent);
                     break;
                 case R.id.butt_pastResults:
+                    ma.score = 0;
                     Intent intent2 = new Intent(getActivity(), PastActivity.class);
                     startActivity(intent2);
                     break;

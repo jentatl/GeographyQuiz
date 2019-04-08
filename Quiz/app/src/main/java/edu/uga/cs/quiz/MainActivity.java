@@ -1,7 +1,10 @@
 package edu.uga.cs.quiz;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,16 +16,20 @@ import android.widget.Toast;
 
 import com.opencsv.CSVReader;
 
+import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-
+/**
+ * Handles main activity
+ */
 public class MainActivity extends AppCompatActivity {
 
     private Button newQuiz;
-    private Button delete;
+    private Button past;
 
     public static final String DEBUG_TAG = "MainActivity";
+    public static int score = 0;
 
     private CountryData countryData = null;
 
@@ -32,11 +39,33 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         newQuiz = (Button) findViewById(R.id.butt_newQuiz);
-        delete = (Button) findViewById(R.id.butt_pastResults);
+        past = (Button) findViewById(R.id.butt_pastResults);
         countryData = new CountryData( this );
 
+        if(!fileExists(this, "/data/data/edu.uga.cs.quiz/databases/countries.db")){
+            try {
+                Resources res = getResources();
+                InputStream in_s = res.openRawResource(R.raw.country_continent);
+
+                // read the CSV data
+                CSVReader reader = new CSVReader(new InputStreamReader(in_s));
+                String[] nextLine;
+
+                while ((nextLine = reader.readNext()) != null) {
+                    // calls to write to database after setting up
+                    Country country = new Country(nextLine[0], nextLine[1]);
+                    // sets everything
+                    new CountryDBWriterTask().execute(country);
+                }
+            } catch (Exception e) {
+                Log.e(DEBUG_TAG, e.toString());
+
+            }
+        }else{
+            // do nothing
+        }
         newQuiz.setOnClickListener( new QuizClickListener()) ;
-        delete.setOnClickListener( new PastClickListener()) ;
+        past.setOnClickListener( new PastClickListener()) ;
     }
 
     private class PastClickListener implements View.OnClickListener{
@@ -52,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
 
-          /*  try {
+         /* try {
                 Resources res = getResources();
                 InputStream in_s = res.openRawResource(R.raw.country_continent);
 
@@ -71,10 +100,18 @@ public class MainActivity extends AppCompatActivity {
 
             }*/
 
-            Intent intent = new Intent(MainActivity.this, QuizActivity.class);
+           Intent intent = new Intent(MainActivity.this, QuizActivity.class);
             startActivity(intent);
 
         }// on click view
+    }
+
+    public boolean fileExists(Context context, String filename) {
+        File file = new File(filename);
+        if(file == null || !file.exists()) {
+            return false;
+        }
+        return true;
     }
 
     // This is an AsyncTask class (it extends AsyncTask) to perform DB writing of a job lead, asynchronously.

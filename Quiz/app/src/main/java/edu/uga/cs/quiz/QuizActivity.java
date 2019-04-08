@@ -1,11 +1,16 @@
 package edu.uga.cs.quiz;
 
+import android.arch.lifecycle.ViewModel;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -23,6 +28,8 @@ public class QuizActivity extends AppCompatActivity {
     protected ArrayList <Integer> csvList = new ArrayList();
     protected ArrayList <Integer> random3 = new ArrayList();
     protected ArrayList <Integer> questionNum = new ArrayList();
+
+    MainActivity ma = new MainActivity();
 
     CountryData cd = new CountryData(this);
     static final int NUM_ITEMS = 6;
@@ -107,62 +114,21 @@ public class QuizActivity extends AppCompatActivity {
         }// for
     }// check answers
 
-    public void checkAnswer(int question, String continent, int continentNum, long answer){
-        boolean flag = true;
+    public boolean checkAnswer(int question, String continent, int continentNum, long answer){
         System.out.println("Right Continent: " + continent);
         System.out.println("Right Continent: " + continentNum);
         System.out.println("Selected: " + answer);
 
-        if(continentNum != (int)answer){
-            flag = false;
-        }else{
-           // add to score
+        boolean flag = false;
+
+        if(continentNum != (int)answer){ // if answer is wrong
+            // nothing happens
+        }else{ // if answer is right
+            ma.score++;
+            flag = true;
         }
-        System.out.println("flag: " + flag);
-        checkScore();
+
+        System.out.println("Score: " + ma.score);
+        return flag;
     }
-
-    public void checkScore(){
-        // prnit score
-    }
-
-    /*
-
-
-    public void getAnswerOptions(int questionNum){
-        if(questionNum == 1 || questionNum == 0){
-            this.answer = continentNumberForm[0];
-        }else if(questionNum == 2){
-            this.answer = continentNumberForm[1];
-        }else if(questionNum == 3){
-            this.answer = continentNumberForm[2];
-        }else if(questionNum == 4){
-            this.answer = continentNumberForm[3];
-        }else if(questionNum == 5){
-            this.answer = continentNumberForm[4];
-        }else if(questionNum == 6){
-            this.answer = continentNumberForm[5];
-        }
-    }
-
-    public String getCorrectAnswer(){
-        return CONTINENTS[this.answer];
-    } // get correct answer
-
-    public int getNumCorrectAnswer(){
-        return continentNumberForm[this.answer];
-    }
-
-    public String getCountry(int x){
-        return countries[x];
-    }
-
-    public String getContinent(int x){
-        return continentAnswers[x];
-    }
-
-    public int getContinentNum(int x){
-        return continentNumberForm[x];
-    }
-*/
 }// class

@@ -34,6 +34,8 @@ public class QuizFragment extends ListFragment {
     View v;
     QuizActivity qa = new QuizActivity();
 
+    TextView correct;
+
   /* Create a new instance of fragment */
   static QuizFragment newInstance(int x){
       QuizFragment qf = new QuizFragment();
@@ -58,7 +60,6 @@ public class QuizFragment extends ListFragment {
       Collections.shuffle(random3);
       Collections.shuffle(random7);
 
-
       num = getArguments() != null ? getArguments().getInt("num") : 1;
   }// onCreate
 
@@ -68,6 +69,10 @@ public class QuizFragment extends ListFragment {
             v = inflater.inflate(R.layout.fragment_quiz, container, false);
             View tv = v.findViewById(R.id.questionTextView);
             ((TextView) tv).setText("\nQuestion Number " + (num + 1) + "\n\nWhich continent is " + getCountry(num) + " from?");
+
+
+            correct = v.findViewById(R.id.correct);
+            correct.setVisibility(View.INVISIBLE);
 
             Button button = v.findViewById(R.id.button);
 
@@ -107,8 +112,14 @@ public class QuizFragment extends ListFragment {
     @Override
     public void onListItemClick(ListView l, View v, int position, long id){
        // l.getChildAt(position).setBackgroundColor(Color.parseColor("#D3D3D3"));
-        qa.checkAnswer(num, answerSelection[a1], a1, id);
+        boolean correct = qa.checkAnswer(num, answerSelection[a1], a1, id);
+
+        if(correct){
+            this.correct.setVisibility(View.VISIBLE);
+        }
+
         Log.i("FragmentList", "Item Clicked: " + id);
+
     }// on list item clicked
 
     public String getCountry(int num){
@@ -154,43 +165,5 @@ public class QuizFragment extends ListFragment {
             x++;
         }
     }
-/*
 
-
-        String continents [] = new String[3];
-        int numAnswer = qa.getNumCorrectAnswer();
-
-        // continents array holds where all of the continent options will show. One slot will have the correct answer
-        continents[0] = " ";
-        continents[1] = " ";
-        continents[2] = " " ;
-
-        // gets correct answer
-        continents[(random3.get(0))-1] = qa.getCorrectAnswer();
-
-        //System.out.println("Random: " + (random3.get(0)-1));
-       // System.out.println("Correct answer: " + qa.getCorrectAnswer());
-
-        answer = qa.getNumCorrectAnswer();
-
-        get2RandomContinents();
-
-        // sets continents
-        continents[(random3.get(1))-1] = random2Continents[0];
-        continents[(random3.get(2))-1] = random2Continents[1];
-
-        // sets text
-        rb1.setText(continents[0]);
-        rb2.setText(continents[1]);
-        rb3.setText(continents[2]);
-
-        return view;
-    }
-
-    public void get2RandomContinents(){
-        random2Continents[0] = "hello";
-        random2Continents[1] = "there";
-    }
-
-*/
 }

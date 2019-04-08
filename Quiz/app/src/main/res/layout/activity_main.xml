@@ -6,24 +6,25 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <ImageView
+    <TextView
         android:id="@+id/imageView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="fitXY"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="373dp"
+        android:layout_height="286dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="36dp"
+        android:text="Welcome to the \nGEOGRAPHY QUIZ. The purpose of this quiz is to test your skillls in geography! \n\nRules: \nSelect the appropriate country with the right continent. There are 6 question. Good luck!"
+        android:textSize="25dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/splash_screen" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/butt_newQuiz"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="84dp"
-        android:layout_marginLeft="84dp"
-        android:layout_marginBottom="124dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginLeft="52dp"
+        android:layout_marginBottom="40dp"
         android:text="New Quiz"
         android:textAllCaps="false"
         app:layout_constraintBaseline_toBaselineOf="@+id/butt_pastResults"
@@ -44,8 +45,9 @@
         android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.934"
         app:layout_constraintStart_toEndOf="@+id/butt_newQuiz"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.82" />
+        app:layout_constraintVertical_bias="0.904" />
 
 </android.support.constraint.ConstraintLayout>

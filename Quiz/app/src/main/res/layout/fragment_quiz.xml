@@ -11,9 +11,9 @@
         android:id="@+id/questionTextView"
         android:layout_width="323dp"
         android:layout_height="234dp"
+        android:layout_marginTop="100dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
@@ -32,15 +32,35 @@
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:layout_editor_absoluteX="161dp"
-        tools:layout_editor_absoluteY="599dp"
-        android:layout_marginTop = "400dp"
+        android:layout_marginTop="400dp"
         android:text="View Results"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.499"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/correct"
+        android:layout_width="323dp"
+        android:layout_height="234dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:gravity="center"
+        android:text="Answer is Correct!"
+        android:textColor="@color/green"
+        android:textSize="25dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.712" />
+
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -62,8 +82,6 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:choiceMode="singleChoice"
-            android:textSize="30dp"/>
+            android:textSize="30dp" />
     </FrameLayout>
-
-
 </android.support.constraint.ConstraintLayout>

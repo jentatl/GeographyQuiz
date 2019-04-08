@@ -6,6 +6,9 @@ public class Country {
     private String name;
     private String continent;
 
+    /***
+     * A class to handle country
+     */
     public Country()
     {
         this.id = -1;
