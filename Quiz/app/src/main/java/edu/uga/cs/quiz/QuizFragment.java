@@ -113,11 +113,6 @@ public class QuizFragment extends ListFragment {
     public void onListItemClick(ListView l, View v, int position, long id){
        // l.getChildAt(position).setBackgroundColor(Color.parseColor("#D3D3D3"));
         boolean correct = qa.checkAnswer(num, answerSelection[a1], a1, id);
-
-        if(correct){
-            this.correct.setVisibility(View.VISIBLE);
-        }
-
         Log.i("FragmentList", "Item Clicked: " + id);
 
     }// on list item clicked

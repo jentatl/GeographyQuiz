@@ -34,7 +34,7 @@ public class QuizActivity extends AppCompatActivity {
     CountryData cd = new CountryData(this);
     static final int NUM_ITEMS = 6;
 
-    static public int count = 0;
+    public int count = 0;
     QuizFragmentCollectionAdapter mAdapter;
 
     ViewPager mPager;
@@ -44,6 +44,8 @@ public class QuizActivity extends AppCompatActivity {
         // initiolizing lists, dont remove but not important to look at
         random7.add(1); random7.add(2); random7.add(3); random7.add(4); random7.add(5); random7.add(6); random7.add(7);
         random3.add(1); random3.add(2); random3.add(3);
+
+        count = 0;
 
         for(int i = 1; i < 195; i++){ csvList.add(i); }
         Collections.shuffle(csvList);
@@ -122,10 +124,17 @@ public class QuizActivity extends AppCompatActivity {
         boolean flag = false;
 
         if(continentNum != (int)answer){ // if answer is wrong
+            if(count != 0){
+                ma.score--;
+                count--;
+            }
             // nothing happens
         }else{ // if answer is right
-            ma.score++;
-            flag = true;
+            count++;
+            if (count >= 0 && count <= 1) {
+                ma.score++;
+                flag = true;
+            }
         }
 
         System.out.println("Score: " + ma.score);
